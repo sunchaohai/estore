@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0"
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+	http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+
+    <!-- ========================================过滤器配置==================================== -->
+    <!--中文乱码过滤器：执行过滤器init方法会读取这里面的数据-->
+    <filter>
+        <filter-name>encodingFilter</filter-name>
+        <filter-class>com.hai.chao.filter.EncodingFilter</filter-class>
+        <init-param>
+            <param-name>filter-name</param-name>
+            <param-value>com.hai.chao.filter.EncodingFilter</param-value>
+        </init-param>
+    </filter>
+   <filter-mapping>
+       <filter-name>encodingFilter</filter-name>
+       <!--所有请求都经过此过滤器-->
+       <url-pattern>/*</url-pattern>
+   </filter-mapping>
+
+    <!-- 登陆过滤器 -->
+    <filter>
+        <filter-name>loginConfirm</filter-name>
+        <filter-class>com.hai.chao.filter.LoginConfirmFilter</filter-class>
+        <init-param>
+            <param-name>noLoginPaths</param-name>
+            <param-value>servletRegister;getCookie;servletAjax;servletLogin;.gif;.css;.js;.jsp;.jpg;.png</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>loginConfirm</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <!--权限过滤器-->
+   <!-- ========================================过滤器配置==================================== -->
+    <filter>
+        <filter-name>authFilter</filter-name>
+        <filter-class>com.hai.chao.filter.AuthColFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>authFilter</filter-name>
+        <url-pattern>/admin_index.jsp</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>authFilter</filter-name>
+        <url-pattern>/goods_admin.jsp</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>authFilter</filter-name>
+        <url-pattern>/add_good.jsp</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>authFilter</filter-name>
+        <url-pattern>/addGoodServlet</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>authFilter</filter-name>
+        <url-pattern>/servletGoodsListAdmin</url-pattern>
+    </filter-mapping>
+
+    <!--=====监听器=====-->
+    <listener>
+        <listener-class>com.hai.chao.listener.ScanOrdeListener</listener-class>
+    </listener>
+
+    <!-- ====配置错误页面====-->
+    <error-page>
+        <error-code>404</error-code>
+        <location>/404.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/500.jsp</location>
+    </error-page>
+
+
+    <!--默认欢迎页：访问根目录时进入此配置页面-->
+    <welcome-file-list>
+        <!--<welcome-file>html/01.html</welcome-file>-->
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+
+</web-app>
